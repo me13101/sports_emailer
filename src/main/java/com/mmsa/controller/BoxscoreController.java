@@ -1,7 +1,12 @@
 package com.mmsa.controller;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.internal.LinkedTreeMap;
+
+import org.json.JSONObject;
+import org.json.JSONArray;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -28,9 +33,18 @@ public class BoxscoreController {
     static String key = "3xbzsfssc3e275uy9r33pvm4";
 
     public static Object getBoxJsonObject(String json){
-        Gson g = new Gson();
-        Object obj = g.fromJson(json, Object.class);
-        return obj;
+        try {
+            JSONObject reader = new JSONObject(json);
+            return reader;
+
+//            Gson g = new Gson();
+//            Object obj = g.fromJson(json, Object.class);
+//            return obj;
+        }catch (JsonSyntaxException jse) {
+            throw new RuntimeException(jse);
+        }catch(Exception e){
+            throw new RuntimeException(e);
+        }
     }
 
     public static URL getBoxscoreURL(){
@@ -39,8 +53,7 @@ public class BoxscoreController {
             String date = sdf.format(new Date());
             return new URL(protocol + host + level_version + "/games/" + date + "/boxscore.json?api_key=" + key);
         }catch(Exception e){
-            System.out.println(e);
-            return null;
+            throw new RuntimeException(e);
         }
     }
 
@@ -52,8 +65,20 @@ public class BoxscoreController {
             BufferedReader reader = new BufferedReader(new InputStreamReader((InputStream)o));
             return reader.readLine();
         } catch (Exception ioe) {
-            System.out.println(ioe);
-            return null;
+            throw new RuntimeException(ioe);
+        }
+    }
+
+    public static Object iterateBoxscore(Object boxscore, String key){
+        if(boxscore instanceof JSONObject){
+            Object reader = ((JSONObject)boxscore).get("key");
+            return reader;
+        }else if(boxscore instanceof LinkedTreeMap){
+            Object reader = ((Map)boxscore).get("key");
+            return reader;
+        }else {
+            JSONObject reader = new JSONObject(boxscore);
+            return reader;
         }
     }
 
@@ -64,8 +89,7 @@ public class BoxscoreController {
             LinkedTreeMap leagueMap = (LinkedTreeMap)map.get("league");
             leagueList.add(leagueMap);
         }catch (Exception e){
-            System.out.print(e);
-            return leagueList;
+            throw new RuntimeException(e);
         }
         return leagueList;
     }
@@ -78,8 +102,7 @@ public class BoxscoreController {
             ArrayList<LinkedTreeMap> games = (ArrayList<LinkedTreeMap>)gamesMap.get("games");
             gameList = parseGameMap(games);
         }catch (Exception e){
-            System.out.print(e);
-            return gameList;
+            throw new RuntimeException(e);
         }
         return gameList;
     }
