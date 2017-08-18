@@ -4,6 +4,8 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.internal.LinkedTreeMap;
 
 import com.mmsa.model.BaseballGame;
+import com.mmsa.model.BaseballTeam;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -17,26 +19,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import com.mmsa.model.Team;
-
-import javax.swing.*;
-
 /**
  * Created by micha on 6/29/2017.
  */
 public class BoxscoreController {
-
-    static String host = "api.sportradar.us/";
-    static String protocol = "https://";
-    static String level_version;
-    static String key;
-
-    public BoxscoreController(String level_version, String key){
-        this.level_version = level_version;
-        this.key = key;
-    }
-//    static String level_version = "mlb-t6";
-//    static String key = "3xbzsfssc3e275uy9r33pvm4";
 
     public Object getBoxJsonObject(String json){
         try {
@@ -49,17 +35,7 @@ public class BoxscoreController {
         }
     }
 
-    public URL getBoxscoreURL(){
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-            String date = sdf.format(new Date());
-            return new URL(protocol + host + level_version + "/games/" + date + "/boxscore.json?api_key=" + key);
-        }catch(Exception e){
-            throw new RuntimeException(e);
-        }
-    }
-
-    public String getBoxScores(URL url){
+    public static String getBoxScores(URL url){
 
         try {
             URLConnection connection = url.openConnection();
@@ -72,15 +48,25 @@ public class BoxscoreController {
     }
 
     public static Object iterateBoxscore(Object boxscore, String key){
-        if(boxscore instanceof JSONObject){
-            Object reader = ((JSONObject)boxscore).get("key");
-            return reader;
-        }else if(boxscore instanceof LinkedTreeMap){
-            Object reader = ((Map)boxscore).get("key");
-            return reader;
-        }else {
-            JSONObject reader = new JSONObject(boxscore);
-            return reader;
+        try {
+            if (boxscore instanceof JSONObject) {
+                Object reader = ((JSONObject) boxscore).get(key);
+                return reader;
+            }else if(boxscore instanceof LinkedTreeMap){
+                Object reader = ((Map)boxscore).get("key");
+                return reader;
+            }else if(boxscore instanceof JSONArray) {
+                List<Object> list = new ArrayList();
+                for (int i = 0; i < ((JSONArray)boxscore).length(); i++){
+                    list.add(((JSONArray) boxscore).get(i));
+                }
+                return list;
+            }else {
+                JSONObject reader = new JSONObject(boxscore.toString());
+                return reader;
+            }
+        }catch (Exception e){
+            throw new RuntimeException(e);
         }
     }
 
@@ -119,8 +105,8 @@ public class BoxscoreController {
         return newGameList;
     }
 
-    public static Team getTeam(Map gameMap, String key){
-        Team team = new Team();
+    public static BaseballTeam getTeam(Map gameMap, String key){
+        BaseballTeam team = new BaseballTeam();
         Map m = (Map)gameMap.get(key);
         team.setMarket(m.get("market").toString());
         team.setName(m.get("name").toString());
@@ -138,7 +124,7 @@ public class BoxscoreController {
         return gameMap.get(key).toString();
     }
 
-    private static Team getWinner(Team a, Team b){
+    private static BaseballTeam getWinner(BaseballTeam a, BaseballTeam b){
         if(Double.parseDouble(a.getRuns()) > Double.parseDouble(b.getRuns())){
             return a;
         }
@@ -147,7 +133,7 @@ public class BoxscoreController {
         }
     }
 
-    private static Team getLoser(Team a, Team b){
+    private static BaseballTeam getLoser(BaseballTeam a, BaseballTeam b){
         if(Double.parseDouble(a.getRuns()) < Double.parseDouble(b.getRuns())){
             return a;
         }
@@ -157,20 +143,10 @@ public class BoxscoreController {
     }
 
     public static BaseballGame getWinnerLoser(BaseballGame baseballGame){
-        Team winner = getWinner(baseballGame.getHome(), baseballGame.getAway());
-        Team loser = getLoser(baseballGame.getHome(), baseballGame.getAway());
+        BaseballTeam winner = getWinner(baseballGame.getHome(), baseballGame.getAway());
+        BaseballTeam loser = getLoser(baseballGame.getHome(), baseballGame.getAway());
         baseballGame.setWinner(winner);
         baseballGame.setLoser(loser);
         return baseballGame;
     }
- /*   public static Team getDate(Map gameMap, String key){
-        Team team = new Team();
-        Map m = (Map)gameMap.get(key);
-
-        team.setMarket(m.get("market").toString());
-        team.setName(m.get("name").toString());
-        team.setTeamMap(m);
-
-        return team;
-    }*/
 }

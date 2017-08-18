@@ -3,89 +3,31 @@ package com.mmsa.model;
 import java.util.Map;
 
 /**
- * Created by micha on 6/7/2017.
+ * Created by micha on 8/18/2017.
  */
-public class Team {
-    private Map teamMap;
-    private String name;
-    private String market;
-    private String runs;
-    private String hits;
-    private String errors;
-    private String wins;
-    private String losses;
+public interface Team {
 
-    public Team() {}
+    String getName();
 
-    public Team(Map teamMap, String name, String market) {
-        this.market = market;
-        this.name = name;
-        this.teamMap = teamMap;
-    }
+    Map getTeamMap();
 
-    public String getRuns() {
-        return runs;
-    }
+    String getMarket() ;
 
-    public void setRuns(String runs) {
-        this.runs = runs;
-    }
+    String getWins() ;
 
-    public String getHits() {
-        return hits;
-    }
+    String getLosses();
 
-    public void setHits(String hits) {
-        this.hits = hits;
-    }
+    String getStatus();
 
-    public String getErrors() {
-        return errors;
-    }
+    void setLosses(String losses);
 
-    public void setErrors(String errors) {
-        this.errors = errors;
-    }
+    void setMarket(String market);
 
-    public String getWins() {
-        return wins;
-    }
+    void setName(String name);
 
-    public void setWins(String wins) {
-        this.wins = wins;
-    }
+    void setStatus(String status);
 
-    public String getLosses() {
-        return losses;
-    }
+    void setTeamMap(Map teamMap);
 
-    public void setLosses(String losses) {
-        this.losses = losses;
-    }
-
-    public Map getTeamMap() {
-        return teamMap;
-    }
-
-    public void setTeamMap(Map teamMap) {
-        this.teamMap = teamMap;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getMarket() {
-        return market;
-    }
-
-    public void setMarket(String market) {
-        this.market = market;
-    }
-
-
+    void setWins(String wins);
 }

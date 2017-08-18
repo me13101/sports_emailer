@@ -29,7 +29,7 @@ public class AsciiView {
         int statusLength = 12;
         status = formatString(baseballGame.getStatus(), statusLength);
 
-        System.out.println(status+"|Team                  |Runs|Hits|Errors|" +
+        System.out.println(status+"|BaseballTeam                  |Runs|Hits|Errors|" +
                 "\n|    Away   |" + home +"|"+homeScore+"|"+homeHits+"|"+homeErrors+"|"+
                 "\n|    Home   |" + away +"|"+awayScore+"|"+awayHits+"|"+awayErrors+"|"+
                 "\n|    Date   |"+date+"|\n");
