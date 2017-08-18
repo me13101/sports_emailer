@@ -124,7 +124,7 @@ public class BoxscoreController {
         return gameMap.get(key).toString();
     }
 
-    private static BaseballTeam getWinner(BaseballTeam a, BaseballTeam b){
+    /*private static BaseballTeam getWinner(BaseballTeam a, BaseballTeam b){
         if(Double.parseDouble(a.getRuns()) > Double.parseDouble(b.getRuns())){
             return a;
         }
@@ -148,5 +148,5 @@ public class BoxscoreController {
         baseballGame.setWinner(winner);
         baseballGame.setLoser(loser);
         return baseballGame;
-    }
+    }*/
 }

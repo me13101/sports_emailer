@@ -7,21 +7,21 @@ public interface Game {
 
     public void setStatus(String status);
 
-    public BaseballTeam getHome();
+    public Team getHome();
 
-    public void setHome(BaseballTeam home);
+    public void setHome(Team home);
 
-    public BaseballTeam getAway();
+    public Team getAway();
 
-    public void setAway(BaseballTeam away);
+    public void setAway(Team away);
 
-    public BaseballTeam getWinner();
+    public Team getWinner();
 
-    public void setWinner(BaseballTeam winner);
+    public void setWinner(Team winner);
 
-    public BaseballTeam getLoser();
+    public Team getLoser();
 
-    public void setLoser(BaseballTeam loser);
+    public void setLoser(Team loser);
 
     public Map getScore();
 

@@ -3,10 +3,10 @@ package com.mmsa.model;
 import java.util.Map;
 
 public class BaseballGame implements Game {
-    BaseballTeam home;
-    BaseballTeam away;
-    BaseballTeam winner;
-    BaseballTeam loser;
+    Team home;
+    Team away;
+    Team winner;
+    Team loser;
     Map score;
     Map gameMap;
     String date;
@@ -20,7 +20,7 @@ public class BaseballGame implements Game {
 
     public BaseballGame() {}
 
-    public BaseballGame(BaseballTeam home, BaseballTeam away, String date){
+    public BaseballGame(Team home, Team away, String date){
         this.home=home;
         this.away=away;
         this.date=date;
@@ -82,35 +82,39 @@ public class BaseballGame implements Game {
         this.status = status;
     }
 
-    public BaseballTeam getHome() {
+    public Team getHome() {
         return home;
     }
 
-    public void setHome(BaseballTeam home) {
+    public void setHome(Team home) {
         this.home = home;
     }
 
-    public BaseballTeam getAway() {
+    public Team getAway() {
         return away;
     }
 
-    public void setAway(BaseballTeam away) {
+    public void setAway(Team away) {
         this.away = away;
     }
 
-    public BaseballTeam getWinner() {
+    public Team getWinner() {
         return winner;
+    }
+
+    public void setWinner(Team winner) {
+
     }
 
     public void setWinner(BaseballTeam winner) {
         this.winner = winner;
     }
 
-    public BaseballTeam getLoser() {
+    public Team getLoser() {
         return loser;
     }
 
-    public void setLoser(BaseballTeam loser) {
+    public void setLoser(Team loser) {
         this.loser = loser;
     }
 

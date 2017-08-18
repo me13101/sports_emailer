@@ -4,7 +4,7 @@ import com.mmsa.model.BaseballGame;
 
 public class AsciiView {
 
-    public static void printBoxScore(BaseballGame baseballGame) {
+   /* public static void printBoxScore(BaseballGame baseballGame) {
         String homeScore, awayScore, homeHits, awayHits, homeErrors, awayErrors, date, status;
 
         String home = baseballGame.getAway().getMarket() + " " + baseballGame.getAway().getName();
@@ -35,7 +35,7 @@ public class AsciiView {
                 "\n|    Date   |"+date+"|\n");
 
 
-    }
+    }*/
 
     public static String formatString(String str, int length){
         while (str.length() < length) {
