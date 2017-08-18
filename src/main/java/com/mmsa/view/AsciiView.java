@@ -1,35 +1,33 @@
 package com.mmsa.view;
 
-import com.mmsa.controller.BoxscoreController;
-import com.mmsa.model.Game;
-import com.mmsa.model.Team;
+import com.mmsa.model.BaseballGame;
 
 public class AsciiView {
 
-    public static void printBoxScore(Game game) {
+    public static void printBoxScore(BaseballGame baseballGame) {
         String homeScore, awayScore, homeHits, awayHits, homeErrors, awayErrors, date, status;
 
-        String home = game.getAway().getMarket() + " " + game.getAway().getName();
-        String away = game.getHome().getMarket() + " " + game.getHome().getName();
+        String home = baseballGame.getAway().getMarket() + " " + baseballGame.getAway().getName();
+        String away = baseballGame.getHome().getMarket() + " " + baseballGame.getHome().getName();
         int teamLength = 22;
         home = formatString(home, teamLength);
         away = formatString(away, teamLength);
 
         int runsLength = 4;
-        homeScore = formatString(game.getHome().getRuns(),runsLength);
-        homeHits = formatString(game.getHome().getHits(), runsLength);
-        awayScore = formatString(game.getAway().getRuns(), runsLength);
-        awayHits = formatString(game.getAway().getHits(), runsLength);
+        homeScore = formatString(baseballGame.getHome().getRuns(),runsLength);
+        homeHits = formatString(baseballGame.getHome().getHits(), runsLength);
+        awayScore = formatString(baseballGame.getAway().getRuns(), runsLength);
+        awayHits = formatString(baseballGame.getAway().getHits(), runsLength);
 
         int errorsLength = 6;
-        homeErrors = formatString(game.getHome().getErrors(), errorsLength);
-        awayErrors = formatString(game.getAway().getErrors(), errorsLength);
+        homeErrors = formatString(baseballGame.getHome().getErrors(), errorsLength);
+        awayErrors = formatString(baseballGame.getAway().getErrors(), errorsLength);
 
         int dateLength = 39;
-        date = formatString(game.getDate(), dateLength);
+        date = formatString(baseballGame.getDate(), dateLength);
 
         int statusLength = 12;
-        status = formatString(game.getStatus(), statusLength);
+        status = formatString(baseballGame.getStatus(), statusLength);
 
         System.out.println(status+"|Team                  |Runs|Hits|Errors|" +
                 "\n|    Away   |" + home +"|"+homeScore+"|"+homeHits+"|"+homeErrors+"|"+

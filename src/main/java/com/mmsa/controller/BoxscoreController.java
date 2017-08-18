@@ -1,12 +1,10 @@
 package com.mmsa.controller;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.internal.LinkedTreeMap;
 
+import com.mmsa.model.BaseballGame;
 import org.json.JSONObject;
-import org.json.JSONArray;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -19,8 +17,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import com.mmsa.model.Game;
 import com.mmsa.model.Team;
+
+import javax.swing.*;
 
 /**
  * Created by micha on 6/29/2017.
@@ -29,17 +28,20 @@ public class BoxscoreController {
 
     static String host = "api.sportradar.us/";
     static String protocol = "https://";
-    static String level_version = "mlb-t6";
-    static String key = "3xbzsfssc3e275uy9r33pvm4";
+    static String level_version;
+    static String key;
 
-    public static Object getBoxJsonObject(String json){
+    public BoxscoreController(String level_version, String key){
+        this.level_version = level_version;
+        this.key = key;
+    }
+//    static String level_version = "mlb-t6";
+//    static String key = "3xbzsfssc3e275uy9r33pvm4";
+
+    public Object getBoxJsonObject(String json){
         try {
             JSONObject reader = new JSONObject(json);
             return reader;
-
-//            Gson g = new Gson();
-//            Object obj = g.fromJson(json, Object.class);
-//            return obj;
         }catch (JsonSyntaxException jse) {
             throw new RuntimeException(jse);
         }catch(Exception e){
@@ -47,7 +49,7 @@ public class BoxscoreController {
         }
     }
 
-    public static URL getBoxscoreURL(){
+    public URL getBoxscoreURL(){
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
             String date = sdf.format(new Date());
@@ -57,7 +59,7 @@ public class BoxscoreController {
         }
     }
 
-    public static String getBoxScores(URL url){
+    public String getBoxScores(URL url){
 
         try {
             URLConnection connection = url.openConnection();
@@ -83,7 +85,7 @@ public class BoxscoreController {
     }
 
     public static List getLeague(Object obj){
-        List leagueList = new ArrayList<Game>();
+        List leagueList = new ArrayList<BaseballGame>();
         try {
             LinkedTreeMap map = (LinkedTreeMap)obj;
             LinkedTreeMap leagueMap = (LinkedTreeMap)map.get("league");
@@ -95,7 +97,7 @@ public class BoxscoreController {
     }
 
     public static List getGames(Object obj){
-        List gameList = new ArrayList<Game>();
+        List gameList = new ArrayList<BaseballGame>();
         try {
             LinkedTreeMap map = (LinkedTreeMap)obj;
             LinkedTreeMap gamesMap = (LinkedTreeMap)map.get("league");
@@ -110,9 +112,9 @@ public class BoxscoreController {
     public static List parseGameMap(List gameMap){
         List newGameList = new ArrayList<Object>();
         for (Object o: gameMap){
-            Game newGame = new Game();
-            newGame.setGameMap((Map)((Map)o).get("game"));
-            newGameList.add(newGame);
+            BaseballGame newBaseballGame = new BaseballGame();
+            newBaseballGame.setGameMap((Map)((Map)o).get("game"));
+            newGameList.add(newBaseballGame);
         }
         return newGameList;
     }
@@ -154,12 +156,12 @@ public class BoxscoreController {
         }
     }
 
-    public static Game getWinnerLoser(Game game){
-        Team winner = getWinner(game.getHome(), game.getAway());
-        Team loser = getLoser(game.getHome(), game.getAway());
-        game.setWinner(winner);
-        game.setLoser(loser);
-        return game;
+    public static BaseballGame getWinnerLoser(BaseballGame baseballGame){
+        Team winner = getWinner(baseballGame.getHome(), baseballGame.getAway());
+        Team loser = getLoser(baseballGame.getHome(), baseballGame.getAway());
+        baseballGame.setWinner(winner);
+        baseballGame.setLoser(loser);
+        return baseballGame;
     }
  /*   public static Team getDate(Map gameMap, String key){
         Team team = new Team();

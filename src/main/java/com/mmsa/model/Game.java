@@ -1,90 +1,37 @@
 package com.mmsa.model;
 
-import java.util.Date;
 import java.util.Map;
 
-/**
- * Created by micha on 6/7/2017.
- */
-public class Game extends Object {
-    Team home;
-    Team away;
-    Team winner;
-    Team loser;
-    Map score;
-    Map gameMap;
-    String date;
-    String status;
+public interface Game {
+    public String getStatus();
 
-    public Game(){
-    }
-    public Game(Team home, Team away, String date){
-        this.home=home;
-        this.away=away;
-        this.date=date;
-    }
+    public void setStatus(String status);
 
-    public String getStatus() {
-        return status;
-    }
+    public Team getHome();
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    public void setHome(Team home);
 
-    public Team getHome() {
-        return home;
-    }
+    public Team getAway();
 
-    public void setHome(Team home) {
-        this.home = home;
-    }
+    public void setAway(Team away);
 
-    public Team getAway() {
-        return away;
-    }
+    public Team getWinner();
 
-    public void setAway(Team away) {
-        this.away = away;
-    }
+    public void setWinner(Team winner);
 
-    public Team getWinner() {
-        return winner;
-    }
+    public Team getLoser();
 
-    public void setWinner(Team winner) {
-        this.winner = winner;
-    }
+    public void setLoser(Team loser);
 
-    public Team getLoser() {
-        return loser;
-    }
+    public Map getScore();
 
-    public void setLoser(Team loser) {
-        this.loser = loser;
-    }
+    public void setScore(Map score);
 
-    public Map getScore() {
-        return score;
-    }
+    public Map getGameMap();
 
-    public void setScore(Map score) {
-        this.score = score;
-    }
+    public void setGameMap(Map gameMap);
 
-    public Map getGameMap() {
-        return gameMap;
-    }
+    public String getDate();
 
-    public void setGameMap(Map gameMap) {
-        this.gameMap = gameMap;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
+    public void setDate(String date);
 }
