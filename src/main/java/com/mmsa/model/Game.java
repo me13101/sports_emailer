@@ -34,4 +34,8 @@ public interface Game {
     public String getDate();
 
     public void setDate(String date);
+
+    public void setGameID(String gameID);
+
+    public String getGameID();
 }

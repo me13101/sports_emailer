@@ -16,6 +16,10 @@ public class URLMapper {
         return protocol + host + mlbLevelVersion + "/games/" + date + "/boxscore.json?api_key=" + mlbKey;
     }
 
+    public static String getMLBPBPFORMAT(String gameID){
+        return protocol + host + mlbLevelVersion + "/games/" + gameID + "/pbp.json?api_key=" + mlbKey;
+    }
+
     public static String getNFLFORMAT(String date){
         return protocol + host + nflLevelVersion + "/games/" + date + "/boxscore.json?api_key=" + nflKey;
     }
@@ -40,5 +44,13 @@ public class URLMapper {
             }
         }
         return null;
+    }
+
+    public static URL getPBPURL(String gameID){
+        try {
+            return new URL(getMLBPBPFORMAT(gameID));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

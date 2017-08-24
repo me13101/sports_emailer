@@ -61,7 +61,8 @@ public class BoxscoreController {
                     list.add(((JSONArray) boxscore).get(i));
                 }
                 return list;
-            }else {
+            }
+            else {
                 JSONObject reader = new JSONObject(boxscore.toString());
                 return reader;
             }

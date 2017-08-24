@@ -17,6 +17,9 @@ public class BaseballGame implements Game {
     String awayHits;
     String awaySore;
     String awayErrors;
+    String inning;
+    String inningHalf;
+    String gameID;
 
     public BaseballGame() {}
 
@@ -106,6 +109,22 @@ public class BaseballGame implements Game {
 
     }
 
+    public void setInning(String inning){
+        this.inning = inning;
+    }
+
+    public void setInningHalf(String inningHalf){
+        this.inningHalf = inningHalf;
+    }
+
+    public String getInning(){
+        return inning;
+    }
+
+    public String getInningHalf(){
+        return inningHalf;
+    }
+
     public void setWinner(BaseballTeam winner) {
         this.winner = winner;
     }
@@ -141,4 +160,12 @@ public class BaseballGame implements Game {
     public void setDate(String date) {
         this.date = date;
     }
+
+    public void setGameID(String gameID){
+        this.gameID = gameID;
+    }
+    public String getGameID(){
+        return gameID;
+    }
+
 }
